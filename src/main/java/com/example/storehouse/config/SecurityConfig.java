@@ -79,9 +79,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
 		httpSecurity.authorizeRequests().antMatchers("/api/auth/**").permitAll();
-		httpSecurity.authorizeRequests().antMatchers("/api/users/**").hasAnyAuthority("admin");
-		httpSecurity.authorizeRequests().antMatchers("/api/roles/**").hasAnyAuthority("admin");
-		httpSecurity.authorizeRequests().antMatchers("/api/departments/**").hasAnyAuthority("admin");
+		httpSecurity.authorizeRequests().antMatchers("/api/users/**").hasAnyAuthority("admin","manager");
+		httpSecurity.authorizeRequests().antMatchers("/api/roles/**").hasAnyAuthority("admin", "manager");
+		httpSecurity.authorizeRequests().antMatchers("/api/departments/**").hasAnyAuthority("admin","manager");
+		httpSecurity.authorizeRequests().antMatchers("/api/suppliers/**").hasAnyAuthority("admin","manager");
+		httpSecurity.authorizeRequests().antMatchers("/api/rawmaterials/**").hasAnyAuthority("admin","manager");
+		httpSecurity.authorizeRequests().antMatchers("/api/orders/**").hasAnyAuthority("admin","manager");
 		httpSecurity.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
 		//httpSecurity.authorizeRequests().antMatchers("/api/roles/**").authenticated();

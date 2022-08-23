@@ -17,6 +17,10 @@ public class Messages {
 	public static final String supplierExists  = "Supplier already exists";
 	public static final String emailInvalid = "Email must contains company name";
 	public static final String supplierNotFound = "No supplier found";
+	public static final String rawMaterialExists = "Raw material already exists";
+	public static final String rawMaterialNotFound = "No matetial found";
+	public static final String orderNotFound = "Order not found";
+	
 	
 	// AUTH
 	public static final String userRegistered = "User has successfully registered";

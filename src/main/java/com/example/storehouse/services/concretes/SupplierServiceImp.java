@@ -1,4 +1,4 @@
-package com.example.storehouse.services.abstracts;
+package com.example.storehouse.services.concretes;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,6 +14,7 @@ import com.example.storehouse.repositories.SupplierRepository;
 import com.example.storehouse.requests.CreateSupplierRequest;
 import com.example.storehouse.requests.UpdateSupplierRequest;
 import com.example.storehouse.responses.SupplierResponse;
+import com.example.storehouse.services.abstracts.SupplierService;
 import com.example.storehouse.utils.results.DataResult;
 import com.example.storehouse.utils.results.Result;
 import com.example.storehouse.utils.results.SuccessDataResult;
@@ -78,11 +79,11 @@ public class SupplierServiceImp implements SupplierService {
 	@Override
 	public DataResult<SupplierResponse> getById(Long id) {
 		Supplier supplier = this.supplierRepository.getById(id);
-		if(supplier == null) {
+		if (supplier == null) {
 			throw new NotFoundException(Messages.supplierNotFound);
 		}
 		return new SuccessDataResult<SupplierResponse>(new SupplierResponse(supplier), Messages.listed);
-		
+
 	}
 
 	private boolean checkIfSupplierExists(String email, String companyName) {
@@ -98,11 +99,20 @@ public class SupplierServiceImp implements SupplierService {
 		companyName = companyName.toLowerCase().replaceAll(" ", "");
 		String[] emailSplit = email.split("@");
 		String companyNameFromEmail = emailSplit[1];
-		String[] companyNameFromEmailSplit = companyNameFromEmail.split(".com");
-		String cName = companyNameFromEmailSplit[0];
+
+		String cName = "";
+		for (int i = 0; i < companyNameFromEmail.length(); i++) {
+			if (companyNameFromEmail.charAt(i) != '.') {
+				cName += companyNameFromEmail.charAt(i);
+			} else {
+				break;
+			}
+		}
+
 		if (cName.equals(companyName)) {
 			return true;
 		}
+
 		return false;
 	}
 
